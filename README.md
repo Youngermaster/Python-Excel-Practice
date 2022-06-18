@@ -8,7 +8,7 @@ The idea is to create a project to practice with Python libraries for Excel.
 
 Run the following commands when starting the project:
 
-```ps
+```powershell
 pip install virtualenv
 python -m venv venv
 Set-ExecutionPolicy Unrestricted -Scope Process
@@ -17,7 +17,7 @@ Set-ExecutionPolicy Unrestricted -Scope Process
 
 If is not your first time, and you just want to run it again, then use:
 
-```ps
+```powershell
 Set-ExecutionPolicy Unrestricted -Scope Process
 .\venv\Scripts\activate
 ```
