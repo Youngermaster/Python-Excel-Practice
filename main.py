@@ -10,6 +10,7 @@ if __name__ == "__main__":
     filename = os.path.join(DOCUMENT_PATH, 'trading.xlsx')
     wb1 = xl.load_workbook(filename)
     ws1 = wb1.worksheets[0]
+    print("Sheet names:", wb1.sheetnames)
 
     # opening the destination excel file
     filename1 = os.path.join(DOCUMENT_PATH, 'test.xlsx')
@@ -23,13 +24,17 @@ if __name__ == "__main__":
 
     # copying the cell values from source
     # excel file to destination excel file
-    for i in range(1, mr + 1):
-        for j in range(1, mc + 1):
-            # reading cell value from source excel file
-            c = ws1.cell(row=i, column=j)
-
-            # writing the read value to destination excel file
-            ws2.cell(row=i, column=j).value = c.value
+    for row in ws1.rows:
+        for cell in row:
+            new_cell = ws2.cell(row=cell.row, column=cell.col_idx,
+                                value=cell.value)
+            if cell.has_style:
+                new_cell.font = copy(cell.font)
+                new_cell.border = copy(cell.border)
+                new_cell.fill = copy(cell.fill)
+                new_cell.number_format = copy(cell.number_format)
+                new_cell.protection = copy(cell.protection)
+                new_cell.alignment = copy(cell.alignment)
 
     # saving the destination excel file
     wb2.save(str(filename1))
