@@ -1,12 +1,17 @@
 import openpyxl as xl
+import os
+
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+DOCUMENT_PATH = os.path.join(ROOT_DIR, 'documents')
+
 
 # opening the source excel file
-filename = "trading.xlsx"
+filename = os.path.join(DOCUMENT_PATH, 'trading.xlsx')
 wb1 = xl.load_workbook(filename)
 ws1 = wb1.worksheets[0]
 
 # opening the destination excel file
-filename1 = "test.xlsx"
+filename1 = os.path.join(DOCUMENT_PATH, 'test.xlsx')
 wb2 = xl.load_workbook(filename1)
 ws2 = wb2.active
 
