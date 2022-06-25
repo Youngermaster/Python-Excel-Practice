@@ -2,25 +2,45 @@ import openpyxl as xl
 import os
 from copy import copy
 
-if __name__ == "__main__":
-    ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-    DOCUMENT_PATH = os.path.join(ROOT_DIR, 'documents')
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+DOCUMENT_PATH = os.path.join(ROOT_DIR, 'documents')
 
+
+def get_worksheets():
+    # opening the source excel file
+    filename = os.path.join(DOCUMENT_PATH, 'trading.xlsx')
+    wb1 = xl.load_workbook(filename)
+    print("Sheet names:", wb1.sheetnames)
+
+
+def get_data_by_columns():
+    filename = os.path.join(DOCUMENT_PATH, 'trading.xlsx')
+    workbook = xl.load_workbook(filename)
+    worksheet = workbook['TD']
+
+    # Create a dictionary of column names
+    ColNames = {}
+    Current = 0
+    for COL in worksheet.iter_cols(1, worksheet.max_column):
+        ColNames[COL[0].value] = Current
+        Current += 1
+
+    # Now you can access by column name
+    # (My data has a column named 'Dogs')
+    for row_cells in worksheet.iter_rows(min_row=1, max_row=4):
+        print(row_cells[ColNames['Row 4']].value)
+
+
+def copy_worbook():
     # opening the source excel file
     filename = os.path.join(DOCUMENT_PATH, 'trading.xlsx')
     wb1 = xl.load_workbook(filename)
     ws1 = wb1.worksheets[0]
-    print("Sheet names:", wb1.sheetnames)
 
     # opening the destination excel file
     filename1 = os.path.join(DOCUMENT_PATH, 'test.xlsx')
     wb2 = xl.load_workbook(filename1)
     ws2 = wb2.active
-
-    # calculate total number of rows and
-    # columns in source excel file
-    mr = ws1.max_row
-    mc = ws1.max_column
 
     # copying the cell values from source
     # excel file to destination excel file
@@ -38,3 +58,8 @@ if __name__ == "__main__":
 
     # saving the destination excel file
     wb2.save(str(filename1))
+
+
+if __name__ == "__main__":
+    get_worksheets()
+    get_data_by_columns()
