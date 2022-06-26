@@ -55,10 +55,6 @@ def filter_by_columns():
             print(row_cells[ColNames['Row 4']].value)
 
 
-def filter_by_row():
-    print("filter_by_row")
-
-
 def get_data_in_range():
     print("get_data_in_range")
 
