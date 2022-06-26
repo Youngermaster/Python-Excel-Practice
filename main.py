@@ -7,6 +7,7 @@ DOCUMENT_PATH = os.path.join(ROOT_DIR, 'documents')
 
 
 def get_worksheets():
+    print("get_worksheets")
     # opening the source excel file
     filename = os.path.join(DOCUMENT_PATH, 'trading.xlsx')
     wb1 = xl.load_workbook(filename)
@@ -14,6 +15,7 @@ def get_worksheets():
 
 
 def get_data_by_columns():
+    print("get_data_by_columns")
     filename = os.path.join(DOCUMENT_PATH, 'trading.xlsx')
     workbook = xl.load_workbook(filename)
     worksheet = workbook['TD']
@@ -27,8 +29,42 @@ def get_data_by_columns():
 
     # Now you can access by column name
     # (My data has a column named 'Dogs')
-    for row_cells in worksheet.iter_rows(min_row=1, max_row=4):
+    # If we want rang
+    # for row_cells in worksheet.iter_rows(min_row=1, max_row=4):
+    for row_cells in worksheet.iter_rows():
         print(row_cells[ColNames['Row 4']].value)
+
+
+def filter_by_columns():
+    print("filter_by_columns")
+    filename = os.path.join(DOCUMENT_PATH, 'trading.xlsx')
+    workbook = xl.load_workbook(filename)
+    worksheet = workbook['TD']
+
+    # Create a dictionary of column names
+    ColNames = {}
+    Current = 0
+    for COL in worksheet.iter_cols(1, worksheet.max_column):
+        ColNames[COL[0].value] = Current
+        Current += 1
+
+    # Now you can access by column name
+    # (My data has a column named 'Dogs')
+    for row_cells in worksheet.iter_rows():
+        if row_cells[ColNames['Filter']].value == True:
+            print(row_cells[ColNames['Row 4']].value)
+
+
+def filter_by_row():
+    print("filter_by_row")
+
+
+def get_data_in_range():
+    print("get_data_in_range")
+
+
+def write_data_in_range():
+    print("write_data_in_range")
 
 
 def copy_worbook():
@@ -63,3 +99,4 @@ def copy_worbook():
 if __name__ == "__main__":
     get_worksheets()
     get_data_by_columns()
+    filter_by_columns()
