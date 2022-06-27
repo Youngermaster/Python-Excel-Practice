@@ -67,7 +67,7 @@ def get_data_in_range():
 
 
 def flush():
-    print("")
+    print("Flush")
     filename = os.path.join(DOCUMENT_PATH, 'trading.xlsx')
     workbook = xl.load_workbook(filename)
     worksheet = workbook['TD']
