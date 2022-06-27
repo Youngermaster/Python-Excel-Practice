@@ -57,6 +57,27 @@ def filter_by_columns():
 
 def get_data_in_range():
     print("get_data_in_range")
+    filename = os.path.join(DOCUMENT_PATH, 'trading.xlsx')
+    workbook = xl.load_workbook(filename)
+    worksheet = workbook['TD']
+
+    for row in worksheet.iter_rows(min_col=3, max_col=4, min_row=5, max_row=7):
+        for cell in row:
+            print(f"({cell.row}, {cell.col_idx}) -> {cell.value}")
+
+
+def flush():
+    print("")
+    filename = os.path.join(DOCUMENT_PATH, 'trading.xlsx')
+    workbook = xl.load_workbook(filename)
+    worksheet = workbook['TD']
+
+    for row in worksheet.iter_rows(min_col=7, max_col=9, min_row=7):
+        for cell in row:
+            print(cell.value)
+            worksheet.cell(row=cell.row, column=cell.col_idx, value="")
+
+    workbook.save(str(filename))
 
 
 def write_data_in_range():
@@ -93,6 +114,8 @@ def copy_worbook():
 
 
 if __name__ == "__main__":
-    get_worksheets()
-    get_data_by_columns()
-    filter_by_columns()
+    # get_worksheets()
+    # get_data_by_columns()
+    # filter_by_columns()
+    get_data_in_range()
+    flush()
